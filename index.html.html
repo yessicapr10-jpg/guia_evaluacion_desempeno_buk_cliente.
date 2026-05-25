@@ -1,0 +1,388 @@
+
+<style>
+  :root {
+    --buk-blue: #2f4daa;
+    --buk-blue-light: #d9e3fc;
+    --buk-blue-mid: #2e6ec9;
+    --buk-blue-soft: #739fdb;
+    --buk-dark: #2b3b6a;
+    --buk-yellow: #f9b82c;
+    --buk-yellow-light: #fef5e0;
+    --buk-orange: #f59121;
+    --buk-orange-light: #fef0e0;
+    --buk-bg: #f4f6fb;
+    --buk-border: rgba(47,77,170,0.14);
+    --buk-text: #2b3b6a;
+    --buk-sub: #5a6a8f;
+  }
+  * { box-sizing: border-box; }
+  .root { padding: 0.5rem 0 1rem; font-size: 14px; color: var(--buk-text); font-family: 'Source Sans Pro','Segoe UI',sans-serif; }
+
+  .buk-header { background: var(--buk-dark); border-radius: 14px; padding: 14px 18px; display: flex; align-items: center; gap: 12px; margin-bottom: 1.25rem; }
+  .buk-logo { width: 40px; height: 40px; border-radius: 10px; background: var(--buk-blue-light); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .buk-logo svg { width: 24px; height: 24px; }
+  .buk-header-title { font-size: 15px; font-weight: 700; color: #fff; letter-spacing: -0.01em; }
+  .buk-header-sub { font-size: 12px; color: rgba(255,255,255,0.55); margin-top: 1px; }
+  .buk-header-pill { margin-left: auto; background: var(--buk-yellow); color: var(--buk-dark); font-size: 11px; font-weight: 700; padding: 5px 12px; border-radius: 99px; white-space: nowrap; }
+
+  .tab-bar { display: flex; gap: 5px; margin-bottom: 1.25rem; background: var(--buk-bg); padding: 4px; border-radius: 12px; }
+  .tab { flex: 1; padding: 8px; border-radius: 9px; border: none; cursor: pointer; font-size: 12px; font-weight: 600; background: transparent; color: var(--buk-sub); transition: all .15s; font-family: inherit; }
+  .tab.active { background: var(--buk-blue); color: #fff; }
+  .tab:hover:not(.active) { color: var(--buk-blue); }
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  .card { background: #fff; border: 0.5px solid var(--buk-border); border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 10px; }
+  .card.blue-accent { border-left: 3px solid var(--buk-blue); }
+  .card.orange-accent { border-left: 3px solid var(--buk-orange); }
+  .card.featured { border: 2px solid var(--buk-blue); }
+  .card-title { font-weight: 700; font-size: 14px; color: var(--buk-dark); margin: 0 0 4px; }
+  .card-sub { font-size: 13px; color: var(--buk-sub); margin: 0 0 10px; line-height: 1.55; }
+
+  .badge { display: inline-block; font-size: 11px; padding: 3px 10px; border-radius: 99px; font-weight: 700; margin-bottom: 8px; }
+  .badge-blue { background: var(--buk-blue-light); color: var(--buk-blue); }
+  .badge-orange { background: var(--buk-orange-light); color: #8a4500; }
+  .badge-dark { background: var(--buk-dark); color: #fff; }
+  .badge-yellow { background: var(--buk-yellow-light); color: #8a5a00; }
+
+  .pill-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+  .pill { font-size: 11px; padding: 3px 9px; border-radius: 99px; border: 0.5px solid var(--buk-border); color: var(--buk-sub); background: var(--buk-bg); }
+
+  .row { display: flex; gap: 10px; }
+  .row .card { flex: 1; }
+  .divider { border: none; border-top: 0.5px solid var(--buk-border); margin: 1rem 0; }
+  .section-label { font-size: 11px; font-weight: 700; color: var(--buk-sub); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 8px; }
+
+  .step { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 16px; }
+  .step-num { width: 30px; height: 30px; border-radius: 50%; background: var(--buk-blue); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; color: #fff; }
+  .step-content { flex: 1; padding-top: 3px; }
+  .formula { background: var(--buk-bg); border-left: 3px solid var(--buk-blue-soft); border-radius: 0 8px 8px 0; padding: 8px 12px; font-size: 12px; color: var(--buk-sub); font-family: monospace; margin-top: 6px; line-height: 1.7; }
+
+  .conv-box { background: var(--buk-blue-light); border: 0.5px solid var(--buk-blue-soft); border-radius: 10px; padding: 10px 14px; margin-top: 8px; }
+  .conv-title { font-size: 12px; font-weight: 700; color: var(--buk-blue); margin-bottom: 4px; }
+  .conv-body { font-size: 12px; color: var(--buk-dark); line-height: 1.5; }
+  .conv-formula { font-family: monospace; font-size: 12px; background: rgba(47,77,170,0.1); padding: 7px 10px; border-radius: 6px; margin-top: 6px; color: var(--buk-dark); }
+
+  .info-box { background: var(--buk-yellow-light); border: 1.5px dashed var(--buk-yellow); border-radius: 10px; padding: 10px 14px; margin-bottom: 14px; font-size: 13px; color: var(--buk-dark); line-height: 1.55; }
+  .info-box strong { font-weight: 700; color: #8a5a00; }
+
+  .slider-wrap { margin: 8px 0; }
+  .slider-wrap label { font-size: 12px; color: var(--buk-sub); display: flex; justify-content: space-between; margin-bottom: 4px; }
+  .slider-wrap label span { font-weight: 700; color: var(--buk-blue); }
+  input[type=range] { accent-color: var(--buk-blue); width: 100%; }
+
+  .calc-box { background: var(--buk-bg); border-radius: 10px; padding: 12px 14px; margin-bottom: 8px; }
+  .calc-label { font-size: 11px; color: var(--buk-sub); margin-bottom: 3px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+  .calc-val { font-size: 16px; font-weight: 700; color: var(--buk-dark); }
+  .calc-formula { font-size: 11px; color: var(--buk-sub); font-family: monospace; margin-top: 2px; }
+
+  .result-card { background: var(--buk-blue); border-radius: 12px; padding: 1.25rem; text-align: center; margin-top: 4px; }
+  .result-label { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 4px; }
+  .result-num { font-size: 40px; font-weight: 700; color: var(--buk-yellow); line-height: 1; }
+  .result-desc { font-size: 12px; color: var(--buk-blue-light); margin-top: 8px; font-weight: 600; }
+  .meter-bar { height: 6px; border-radius: 3px; background: rgba(255,255,255,0.18); overflow: hidden; margin: 10px 0 4px; }
+  .meter-fill { height: 100%; border-radius: 3px; background: var(--buk-yellow); transition: width .4s; }
+
+  .mode-toggle { display: flex; gap: 6px; margin-bottom: 12px; }
+  .mode-btn { flex: 1; padding: 8px; border-radius: 8px; border: 1.5px solid var(--buk-border); cursor: pointer; font-size: 12px; font-weight: 600; background: transparent; color: var(--buk-sub); transition: all .15s; font-family: inherit; }
+  .mode-btn.active { background: var(--buk-blue-light); color: var(--buk-blue); border-color: var(--buk-blue); }
+
+  .scenario-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+  .sc-btn { padding: 5px 12px; border-radius: 99px; border: 1.5px solid var(--buk-border); cursor: pointer; font-size: 12px; font-weight: 600; background: transparent; color: var(--buk-sub); transition: all .15s; font-family: inherit; }
+  .sc-btn:hover { border-color: var(--buk-blue); color: var(--buk-blue); background: var(--buk-blue-light); }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .when-row { display: flex; gap: 8px; align-items: flex-start; margin-bottom: 8px; font-size: 13px; line-height: 1.5; }
+  .dot { width: 7px; height: 7px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+  .dot-blue { background: var(--buk-blue); }
+  .dot-orange { background: var(--buk-orange); }
+  .dot-yellow { background: #c98a00; }
+</style>
+
+<div class="root">
+
+  <div class="buk-header">
+    <div class="buk-logo">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M5 4h6.2a3.8 3.8 0 0 1 0 7.6H5V4Z" fill="#2f4daa"/>
+        <path d="M5 11.6h6.6a3.8 3.8 0 0 1 0 7.6H5V11.6Z" fill="#2f4daa" opacity=".55"/>
+      </svg>
+    </div>
+    <div>
+      <div class="buk-header-title">Tu evaluación de desempeño en Buk</div>
+      <div class="buk-header-sub">Entiende cómo se calcula tu nota y elige la metodología que mejor se adapta a tu organización</div>
+    </div>
+    <div class="buk-header-pill">Tu guía ;)</div>
+  </div>
+
+  <div class="tab-bar">
+    <button class="tab active" onclick="show('como',this)">¿Cómo se calcula?</button>
+    <button class="tab" onclick="show('simula',this)">Simula tu nota</button>
+    <button class="tab" onclick="show('elige',this)">¿Qué metodología usar?</button>
+  </div>
+
+  <!-- CÓMO SE CALCULA -->
+  <div class="panel active" id="panel-como">
+
+    <div class="info-box">
+      <strong>¿Sabías que Buk hace todo el cálculo automáticamente?</strong> Solo necesitas configurar los pesos y la escala una vez — el sistema se encarga del resto. Aquí te explicamos cómo funciona por dentro.
+    </div>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <div class="card-title">Tu nota de competencias</div>
+        <div style="font-size:13px;color:var(--buk-sub);margin-top:3px;line-height:1.55;">Buk promedia los indicadores de cada competencia evaluada. Si tienes competencias específicas de tu cargo y competencias transversales, el sistema las combina usando los pesos que tu organización definió. También considera si hay autoevaluación y evaluación de jefatura u otras fuentes.</div>
+        <div class="formula">Nota comp. = (comp. específicas × peso%) + (comp. transversales × peso%)<br>Nota final = (tu autoevaluación × peso%) + (evaluación jefatura × peso%)</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <div class="card-title">Tu nota de objetivos</div>
+        <div style="font-size:13px;color:var(--buk-sub);margin-top:3px;line-height:1.55;">Buk promedia el cumplimiento de tus metas según el peso que tiene cada una. Si tus objetivos se midieron en <strong style="font-weight:700;color:var(--buk-blue);">porcentaje (0%–100%)</strong> y la escala de tu empresa es de 1 a 5, la conversión es automática — no tienes que hacer nada extra.</div>
+        <div class="conv-box">
+          <div class="conv-title">⚡ Conversión automática que hace Buk: % → escala 1–5</div>
+          <div class="conv-body">Si tus metas están en porcentaje, Buk las convierte automáticamente para que todo quede en la misma escala y tu nota final sea comparable y justa.</div>
+          <div class="conv-formula">Nota (1–5) = 1 + (cumplimiento% ÷ 100) × 4<br>Ejemplo: lograste un 75% de tu meta → Buk lo convierte a <strong>4.00</strong> en escala 1–5</div>
+        </div>
+        <div class="formula" style="margin-top:8px;">Nota obj. = Σ (nota de cada meta × peso de cada meta)</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <div class="card-title">Tu nota final</div>
+        <div style="font-size:13px;color:var(--buk-sub);margin-top:3px;line-height:1.55;">Buk combina tu nota de competencias y tu nota de objetivos según los porcentajes que tu organización configuró para cada área. El resultado es una nota única, transparente y automática.</div>
+        <div class="formula">Nota final = (nota comp. × peso comp.) + (nota obj. × peso obj.)<br><br>Ejemplo: si tu empresa definió 70% competencias y 30% objetivos:<br>Nota final = (3.8 × 70%) + (4.0 × 30%) = 2.66 + 1.20 = <strong>3.86</strong></div>
+      </div>
+    </div>
+
+    <hr class="divider">
+    <div class="section-label">Las tres formas de evaluar disponibles en Buk</div>
+    <div class="row">
+      <div class="card blue-accent">
+        <div class="badge badge-blue">Solo competencias</div>
+        <div class="card-title">El cómo trabajas</div>
+        <div class="card-sub">Evalúa comportamientos, habilidades y valores. Tu nota se construye a partir de indicadores observables de cómo haces tu trabajo.</div>
+        <div class="pill-row"><span class="pill">Sin metas numéricas</span><span class="pill">Cultura</span></div>
+      </div>
+      <div class="card orange-accent">
+        <div class="badge badge-orange">Solo objetivos</div>
+        <div class="card-title">Lo que lograste</div>
+        <div class="card-sub">Evalúa el cumplimiento de tus metas. Acepta % o escala 1–5; si usas porcentaje, Buk convierte automáticamente.</div>
+        <div class="pill-row"><span class="pill">KPIs</span><span class="pill">Metas numéricas</span></div>
+      </div>
+    </div>
+    <div class="card featured">
+      <div class="badge badge-dark">✦ Mixta · La más completa</div>
+      <div class="card-title">El cómo y el qué — visión completa de tu desempeño</div>
+      <div class="card-sub">Combina competencias y objetivos en una sola nota. Tu organización define cuánto pesa cada parte. Es la opción más equilibrada porque reconoce tanto tus resultados como la forma en que los alcanzaste.</div>
+      <div class="pill-row"><span class="pill">Cualquier cargo</span><span class="pill">Visión 360°</span><span class="pill">Más completa</span></div>
+    </div>
+  </div>
+
+  <!-- SIMULA TU NOTA -->
+  <div class="panel" id="panel-simula">
+
+    <div class="info-box">
+      <strong>Simula cómo quedaría tu nota final.</strong> Ajusta los pesos que tu organización definió y las notas obtenidas — Buk hace exactamente este cálculo de forma automática.
+    </div>
+
+    <div class="section-label">¿Cómo se miden tus objetivos?</div>
+    <div class="mode-toggle">
+      <button class="mode-btn active" id="btn-pct" onclick="setMode('pct')">Mis metas están en porcentaje (0%–100%)</button>
+      <button class="mode-btn" id="btn-nota" onclick="setMode('nota')">Mis metas están en nota (1–5)</button>
+    </div>
+
+    <div class="section-label">Prueba con distintas configuraciones</div>
+    <div class="scenario-row">
+      <button class="sc-btn" onclick="loadSc('mixta')">Mixta estándar</button>
+      <button class="sc-btn" onclick="loadSc('ventas')">Equipo comercial</button>
+      <button class="sc-btn" onclick="loadSc('soporte')">Rol de soporte</button>
+      <button class="sc-btn" onclick="loadSc('alto')">Alto desempeño</button>
+    </div>
+
+    <div class="row" style="flex-wrap:wrap;align-items:flex-start;gap:14px;">
+      <div style="flex:1;min-width:200px;">
+        <div class="section-label">Pesos definidos por tu organización</div>
+        <div class="slider-wrap">
+          <label>Peso competencias <span id="pc-v">70%</span></label>
+          <input type="range" min="0" max="100" value="70" id="pc" oninput="onPeso(this.value)">
+        </div>
+        <div class="slider-wrap">
+          <label>Peso objetivos <span id="po-v">30%</span></label>
+          <input type="range" min="0" max="100" value="30" id="po" disabled>
+        </div>
+        <hr class="divider">
+        <div class="section-label">Tu nota de competencias (1–5)</div>
+        <div class="slider-wrap">
+          <label>Nota obtenida <span id="nc-v">3.8</span></label>
+          <input type="range" min="1" max="5" step="0.1" value="3.8" id="nc" oninput="calc()">
+        </div>
+        <hr class="divider">
+        <div class="section-label" id="obj-lbl">Tu cumplimiento de objetivos (0%–100%)</div>
+        <div class="slider-wrap">
+          <label>Cumplimiento <span id="no-v">75%</span></label>
+          <input type="range" min="0" max="100" step="1" value="75" id="no" oninput="calc()">
+        </div>
+        <div class="conv-box" id="conv-box">
+          <div class="conv-title">Buk convierte automáticamente</div>
+          <div id="conv-txt" class="conv-body">Tu 75% de cumplimiento → nota <strong>4.00</strong> en escala 1–5</div>
+        </div>
+      </div>
+
+      <div style="flex:1;min-width:200px;">
+        <div class="section-label">Así se arma tu nota</div>
+        <div class="calc-box">
+          <div class="calc-label">Aporte de tus competencias</div>
+          <div class="calc-val" id="cc-v">2.66</div>
+          <div class="calc-formula" id="cc-f">3.8 × 70% = 2.66</div>
+        </div>
+        <div class="calc-box">
+          <div class="calc-label">Aporte de tus objetivos</div>
+          <div class="calc-val" id="co-v">1.20</div>
+          <div class="calc-formula" id="co-f">4.00 × 30% = 1.20</div>
+        </div>
+        <div class="result-card">
+          <div class="result-label">Tu nota final de evaluación</div>
+          <div class="result-num" id="r-num">3.86</div>
+          <div class="meter-bar"><div class="meter-fill" id="r-bar" style="width:71%"></div></div>
+          <div class="result-desc" id="r-desc">✓ Sobre el promedio</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ELIGE METODOLOGÍA -->
+  <div class="panel" id="panel-elige">
+
+    <div class="info-box">
+      <strong>No hay una respuesta única.</strong> La metodología ideal depende de cómo trabaja tu organización, qué quieres medir y qué cultura quieres promover. Estas orientaciones te ayudan a pensar qué se adapta mejor a tu equipo — la configuración final siempre es tuya.
+    </div>
+
+    <div class="two-col">
+      <div class="card blue-accent">
+        <div class="badge badge-blue">Solo competencias</div>
+        <div class="card-title" style="margin-bottom:8px;">Puede encajarte si…</div>
+        <div class="when-row"><div class="dot dot-blue"></div><div>Tus cargos no tienen metas numéricas claras o fácilmente medibles (RRHH, legal, soporte).</div></div>
+        <div class="when-row"><div class="dot dot-blue"></div><div>Quieres poner el foco en cultura, valores y desarrollo de habilidades de tu equipo.</div></div>
+        <div class="when-row"><div class="dot dot-blue"></div><div>Estás evaluando a personas en período de prueba o que acaban de incorporarse.</div></div>
+        <div class="when-row"><div class="dot dot-blue"></div><div>Lo que te importa es el comportamiento y la forma de trabajar, más que los resultados puntuales.</div></div>
+      </div>
+      <div class="card orange-accent">
+        <div class="badge badge-orange">Solo objetivos</div>
+        <div class="card-title" style="margin-bottom:8px;">Puede encajarte si…</div>
+        <div class="when-row"><div class="dot dot-orange"></div><div>Tus equipos tienen metas muy definidas y fáciles de medir: cuota de ventas, producción, tickets resueltos.</div></div>
+        <div class="when-row"><div class="dot dot-orange"></div><div>Los resultados son concretos y verificables, ya sea en porcentaje o en escala numérica.</div></div>
+        <div class="when-row"><div class="dot dot-orange"></div><div>Quieres medir directamente el impacto de cada persona en los resultados del negocio.</div></div>
+        <div class="when-row"><div class="dot dot-orange"></div><div>Ya tienes OKRs o metas formales bien definidas y documentadas en tu organización.</div></div>
+      </div>
+    </div>
+
+    <div class="card featured" style="margin-top:2px;">
+      <div class="badge badge-dark">✦ Mixta · La más completa</div>
+      <div class="card-title" style="margin-bottom:8px;">Suele funcionar muy bien si…</div>
+      <div class="two-col">
+        <div>
+          <div class="when-row"><div class="dot dot-yellow"></div><div>Quieres reconocer tanto lo que tu equipo logró como la forma en que lo hizo.</div></div>
+          <div class="when-row"><div class="dot dot-yellow"></div><div>Tus cargos combinan responsabilidades de resultado con trabajo colaborativo y transversal.</div></div>
+        </div>
+        <div>
+          <div class="when-row"><div class="dot dot-yellow"></div><div>Tu cultura valora tanto los resultados como los valores y la forma de relacionarse.</div></div>
+          <div class="when-row"><div class="dot dot-yellow"></div><div>Quieres evitar que alguien logre sus metas sin importar cómo lo hace.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="conv-box" style="background:var(--buk-yellow-light);border-color:var(--buk-yellow);margin-top:6px;">
+      <div class="conv-title" style="color:#8a5a00;">💡 Recuerda: los pesos los defines tú</div>
+      <div class="conv-body" style="color:var(--buk-dark);">La distribución entre competencias y objetivos (70/30, 60/40, 50/50…) la configura tu organización según su cultura y sus prioridades. No hay una fórmula universal — la mejor configuración es la que refleja lo que realmente valoras en tu equipo. Tu ejecutiva de Buk puede acompañarte en esta decisión.</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+let mode = 'pct';
+function show(id, el) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  el.classList.add('active');
+}
+function setMode(m) {
+  mode = m;
+  document.getElementById('btn-pct').classList.toggle('active', m === 'pct');
+  document.getElementById('btn-nota').classList.toggle('active', m === 'nota');
+  const sl = document.getElementById('no');
+  const cb = document.getElementById('conv-box');
+  const lbl = document.getElementById('obj-lbl');
+  if (m === 'pct') {
+    const prev = parseFloat(sl.value);
+    sl.min = 0; sl.max = 100; sl.step = 1;
+    sl.value = Math.round(Math.max(0, Math.min(100, (prev - 1) / 4 * 100)));
+    lbl.textContent = 'Tu cumplimiento de objetivos (0%–100%)';
+    cb.style.display = 'block';
+  } else {
+    const prev = parseInt(sl.value);
+    sl.min = 1; sl.max = 5; sl.step = 0.1;
+    sl.value = (1 + (prev / 100) * 4).toFixed(1);
+    lbl.textContent = 'Tu nota de objetivos (1–5)';
+    cb.style.display = 'none';
+  }
+  calc();
+}
+function onPeso(v) {
+  v = parseInt(v);
+  document.getElementById('pc-v').textContent = v + '%';
+  document.getElementById('po-v').textContent = (100 - v) + '%';
+  document.getElementById('po').value = 100 - v;
+  calc();
+}
+function calc() {
+  const pc = parseInt(document.getElementById('pc').value) / 100;
+  const po = 1 - pc;
+  const nc = parseFloat(document.getElementById('nc').value);
+  const rawNo = parseFloat(document.getElementById('no').value);
+  document.getElementById('nc-v').textContent = nc.toFixed(1);
+  let noNota;
+  if (mode === 'pct') {
+    noNota = 1 + (rawNo / 100) * 4;
+    document.getElementById('no-v').textContent = rawNo + '%';
+    document.getElementById('conv-txt').innerHTML = 'Tu ' + rawNo + '% de cumplimiento → nota <strong>' + noNota.toFixed(2) + '</strong> en escala 1–5';
+  } else {
+    noNota = rawNo;
+    document.getElementById('no-v').textContent = rawNo.toFixed(1);
+  }
+  const cc = nc * pc;
+  const co = noNota * po;
+  const final = cc + co;
+  const pct = ((final - 1) / 4) * 100;
+  document.getElementById('cc-v').textContent = cc.toFixed(2);
+  document.getElementById('cc-f').textContent = nc.toFixed(1) + ' × ' + Math.round(pc*100) + '% = ' + cc.toFixed(2);
+  document.getElementById('co-v').textContent = co.toFixed(2);
+  document.getElementById('co-f').textContent = (mode==='pct' ? noNota.toFixed(2)+' (de '+rawNo+'%)' : noNota.toFixed(1)) + ' × ' + Math.round(po*100) + '% = ' + co.toFixed(2);
+  document.getElementById('r-num').textContent = final.toFixed(2);
+  document.getElementById('r-bar').style.width = Math.max(0,Math.min(100,Math.round(pct))) + '%';
+  const d = final>=4.5?'⭐ Desempeño sobresaliente':final>=3.5?'✓ Sobre el promedio':final>=2.5?'— En el promedio':'↓ Por debajo del promedio';
+  document.getElementById('r-desc').textContent = d;
+}
+function loadSc(s) {
+  const sc = {mixta:{pc:70,nc:3.8,no:75},ventas:{pc:30,nc:3.5,no:92},soporte:{pc:100,nc:4.2,no:50},alto:{pc:60,nc:4.8,no:95}};
+  const d = sc[s];
+  mode = 'pct';
+  document.getElementById('btn-pct').classList.add('active');
+  document.getElementById('btn-nota').classList.remove('active');
+  const sl = document.getElementById('no');
+  sl.min=0; sl.max=100; sl.step=1; sl.value=d.no;
+  document.getElementById('nc').value=d.nc;
+  document.getElementById('obj-lbl').textContent='Tu cumplimiento de objetivos (0%–100%)';
+  document.getElementById('conv-box').style.display='block';
+  document.getElementById('pc').value=d.pc;
+  onPeso(d.pc);
+}
+calc();
+</script>
